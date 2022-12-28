@@ -60,9 +60,9 @@ jobs:
       id: OIDCTOKEN
       run: | 
         az ad app federated-credential create --id 0636d7e0-ff77-459e-ae19-4bce311b1df9 --parameters \
-        "{\"name\":\"PR-#$GITHUB_TEMP_ENV\",
+        "{\"name\":\"PR-$GITHUB_TEMP_ENV\",
         \"issuer\":\"https://token.actions.githubusercontent.com\",
-        \"subject\":\"repo:Trackonomy/env-protection-github:environment:PR-#$GITHUB_TEMP_ENV\",
+        \"subject\":\"repo:Trackonomy/env-protection-github:environment:PR-$GITHUB_TEMP_ENV\",
         \"description\":\"TempToken for $SLOT_NAME\",
         \"audiences\": [ \"api://AzureADTokenExchange\" ]
         }" 
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build, set-up-test-env]
     environment:
-      name: "PR-#${{ github.event.number }}"
+      name: "PR-${{ github.event.number }}"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
    
 
