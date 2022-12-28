@@ -7,8 +7,9 @@ on:
 
 concurrency: ci-${{ github.event.number }}
 permissions:
-  id-token: write
-  contents: read
+    pull-requests: write
+    id-token: write
+    contents: read
 
 env:
   WEBAPP_NAME: apitestcole2
@@ -70,13 +71,11 @@ jobs:
     name: Deploy to test env
     runs-on: ubuntu-latest
     needs: [build, set-up-test-env]
+    tags: pullrequest
     environment:
       name: "PR #${{ github.event.number }}"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      pull-requests: write
-      id-token: write
-      contents: read
+   
 
     steps:
     - name: Download artifact from build job
