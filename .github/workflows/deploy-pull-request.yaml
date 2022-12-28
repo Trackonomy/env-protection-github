@@ -60,9 +60,7 @@ jobs:
                 \"issuer\":\"https://token.actions.githubusercontent.com\",
                 \"subject\":\"repo:Trackonomy/env-protection-github:environment:t\",
                 \"description\":\"TempToken for \",
-                \"audiences\": [
-                    \"api://AzureADTokenExchange\"
-                ]
+                \"audiences\": [ \"api://AzureADTokenExchange\" ]
             }" 
 
     - name: Create slot on staging site
