@@ -17,6 +17,7 @@ env:
   SLOT_NAME: pr-${{ github.event.number }}
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   GITHUB_TEMP_ENV: '${{ github.event.number }}'
+  GITHUB_PR_TITLE: ${{ github.event.pull_request.title }}
 
 jobs:
   build:
