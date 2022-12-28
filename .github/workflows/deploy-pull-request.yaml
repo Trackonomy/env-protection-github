@@ -64,6 +64,7 @@ jobs:
         \"audiences\": [ \"api://AzureADTokenExchange\" ]
         }" 
 
+
     - name: Create slot on staging site
       run: az webapp deployment slot create --resource-group $RESOURCE_GROUP  --name $WEBAPP_NAME --slot $SLOT_NAME
 
