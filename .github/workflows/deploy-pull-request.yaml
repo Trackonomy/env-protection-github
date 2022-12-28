@@ -38,7 +38,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: gettapevents-server
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}git
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
   
   set-up-test-env:
@@ -46,8 +46,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Log into Azure CLI with service principal
-      uses: azure/login@v1.1
+    - name: 'Az CLI login using OIDC'
+      uses: azure/login@v1
       with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -72,8 +72,8 @@ jobs:
       with:
         name: gettapevents-server
 
-    - name: Log into Azure CLI with service principal
-      uses: azure/login@v1.1
+    - name: 'Az CLI login using OIDC'
+      uses: azure/login@v1
       with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
