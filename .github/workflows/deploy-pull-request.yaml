@@ -65,6 +65,8 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       pull-requests: write
+      id-token: write
+      contents: read
 
     steps:
     - name: Download artifact from build job
