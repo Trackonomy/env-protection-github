@@ -3,7 +3,7 @@ const app = express()
 
 const env = process.env.ENVIRONMENT
 app.get("/ping", (req, res) => {
-    res.send("test")
+    res.send("test2")
 })
 
 
