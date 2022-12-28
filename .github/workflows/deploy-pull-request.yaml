@@ -54,7 +54,8 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Create Azure OIDC Federated Token for Temporary PR ENV in App Registartion
-      run: az ad app federated-credential create --id 0636d7e0-ff77-459e-ae19-4bce311b1df9 --parameters \
+      run: |
+      az ad app federated-credential create --id 0636d7e0-ff77-459e-ae19-4bce311b1df9 --parameters \
             "{                                                                                        
                 \"name\":\"TEMP \",
                 \"issuer\":\"https://token.actions.githubusercontent.com\",
