@@ -57,10 +57,10 @@ jobs:
     - name: Create Azure OIDC Federated Token for Temporary PR ENV in App Registartion
       run: | 
         az ad app federated-credential create --id 0636d7e0-ff77-459e-ae19-4bce311b1df9 --parameters \
-        "{\"name\":\"temptest1\",
+        "{\"name\":\"$SLOT_NAME\",
         \"issuer\":\"https://token.actions.githubusercontent.com\",
-        \"subject\":\"repo:Trackonomy/env-protection-github:environment:te\",
-        \"description\":\"TempToken for \",
+        \"subject\":\"repo:Trackonomy/env-protection-github:environment:$SLOT_NAME\",
+        \"description\":\"TempToken for $SLOT_NAME\",
         \"audiences\": [ \"api://AzureADTokenExchange\" ]
         }" 
 
