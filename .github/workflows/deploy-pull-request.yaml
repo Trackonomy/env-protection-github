@@ -71,7 +71,6 @@ jobs:
     name: Deploy to test env
     runs-on: ubuntu-latest
     needs: [build, set-up-test-env]
-    tags: pullrequest
     environment:
       name: "PR #${{ github.event.number }}"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}

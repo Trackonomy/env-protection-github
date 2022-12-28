@@ -21,4 +21,11 @@ jobs:
       - name: 'Run az commands'
         run: |
           az account show
-          az group list          
+          az group list
+          az ad app federated-credential create --id 0636d7e0-ff77-459e-ae19-4bce311b1df9 --parameters \
+          "{\"name\":\"TEMP \",
+          \"issuer\":\"https://token.actions.githubusercontent.com\",
+          \"subject\":\"repo:Trackonomy/env-protection-github:environment:te\",
+          \"description\":\"TempToken for \",
+          \"audiences\": [ \"api://AzureADTokenExchange\" ]
+          }"           
