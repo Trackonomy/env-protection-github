@@ -24,9 +24,11 @@ jobs:
         with:
           pull-request-number: ${{ github.event.number }}
           comment: |
-            ## Preview link: https://${{ env.WEBAPP_NAME }}-${{env.SLOT_NAME }}.azurewebsites.net 
+            ## Pull Request Has Been Closed... Title <${{ github.event.pull_request.title }}> is invalid or Not Authorized 
             
-            - Your changes have been deployed to the preview site. The preview site will update as you add more commits to this branch.
-            - The preview link is shareable, but will be deleted when the pull request is merged or closed.
+            - No Spaces in PR Title
+            - Minimum Length of Title is 5
+            - Maximum Length of Title is 20
+            - PR Must Have one of the Following PREFIXES: [feature,fix,bugfix,patch,enhancement,hotfix]
             > *This is an automated message.*
           delete-branch: false
