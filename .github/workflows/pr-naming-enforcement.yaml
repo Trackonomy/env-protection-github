@@ -1,28 +1,35 @@
 name: 'PR Title Checker'
 on: 
-  pull_request_target:
-    types: [opened, edited, synchronize, reopened]
+  pull_request:
+    branches:
+      - main
 
 jobs:
   title-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: naveenk1223/action-pr-title@master
-        id: titlecheck
+      - name: Close Pull
+        uses: peter-evans/close-pull@v2
         with:
-          regex: '.+' # Regex the title should match.
-          allowed_prefixes: 'feature,fix,bugfix,patch,enhancement,hotfix' # title should start with the given prefix
-          prefix_case_sensitive: false # title prefix are case insensitive
-          min_length: 10 # Min length of the title
-          max_length: -1 # Max length of the title
+          pull-request-number: 1
+          comment: Auto-closing pull request
+          delete-branch: true
+  #     - uses: naveenk1223/action-pr-title@master
+  #       id: titlecheck
+  #       with:
+  #         regex: '.+' # Regex the title should match.
+  #         allowed_prefixes: 'feature,fix,bugfix,patch,enhancement,hotfix' # title should start with the given prefix
+  #         prefix_case_sensitive: false # title prefix are case insensitive
+  #         min_length: 10 # Min length of the title
+  #         max_length: -1 # Max length of the title
 
-      # runs if previous jobs failed and test-app was not successful (failure/cancelled)
-      # - name: Close Pull Request
-      #   uses: superbrothers/close-pull-request@v3
-      #   if: failure() && steps.titlecheck.outcome != 'success'
-      #   with:
-      #     # Optional. Post a issue comment just before closing a pull request.
-      #     comment: "We do not accept PRs. If you have any questions, please feel free to contact us."
+  #     # runs if previous jobs failed and test-app was not successful (failure/cancelled)
+  #     - name: Close Pull Request
+  #       uses: superbrothers/close-pull-request@v3
+  #       if: failure() && steps.titlecheck.outcome != 'success'
+  #       with:
+  #         # Optional. Post a issue comment just before closing a pull request.
+  #         comment: "We do not accept PRs. If you have any questions, please feel free to contact us."
 
   # close-pullrequest:
   #   if: job.title-check.steps.titlecheck.status == failure()
