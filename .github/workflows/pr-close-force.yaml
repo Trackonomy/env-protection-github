@@ -8,6 +8,7 @@ jobs:
   title-check:
     runs-on: ubuntu-latest
     steps:
+        - name: 'Force Close Pull Request'
         uses: peter-evans/close-pull@v2
         with:
           pull-request-number: 1
