@@ -1,9 +1,7 @@
 name: Run Azure Login with OIDC
 on:
   workflow_dispatch:
-    branches:
-      - main
-
+  
 
 permissions:
   id-token: write
@@ -24,3 +22,10 @@ jobs:
         run: |
           az account show
           az group list
+          az ad app federated-credential create --id 0636d7e0-ff77-459e-ae19-4bce311b1df9 --parameters \
+          "{\"name\":\"PR:1\",
+          \"issuer\":\"https://token.actions.githubusercontent.com\",
+          \"subject\":\"repo:Trackonomy/env-protection-github:environment:PR:1\",
+          \"description\":\"TempToken for \",
+          \"audiences\": [ \"api://AzureADTokenExchange\" ]
+          }"  
