@@ -7,7 +7,6 @@ jobs:
   title-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull Request Title Check
       - uses: naveenk1223/action-pr-title@master
         id: titlecheck
         with:
