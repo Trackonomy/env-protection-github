@@ -1,7 +1,6 @@
 name: Run Azure Login with OIDC
 on:
   workflow_dispatch:
-  pull_request:
     branches:
       - main
 
