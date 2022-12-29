@@ -7,6 +7,7 @@ jobs:
   title-check:
     runs-on: ubuntu-latest
     steps:
+      - name: Pull Request Title Check
       - uses: naveenk1223/action-pr-title@master
         id: titlecheck
         with:
@@ -15,14 +16,16 @@ jobs:
           prefix_case_sensitive: false # title prefix are case insensitive
           min_length: 10 # Min length of the title
           max_length: -1 # Max length of the title
-          continue-on-error: true
 
-    # - name: Check on failures
-    #   if: set-up-test-env.steps.OIDCTOKEN.status == failure() || job.steps.world.status == failure()
-    #   run: exit 1
+      # runs if previous jobs failed and test-app was not successful (failure/cancelled)
+      # - name: action-slack
+      #   if: failure() && steps.titlecheck.outcome != 'success'
+      #   run: |
+      #     echo "Run action-slack"
+      #     echo "Result of test-app was '${{ steps.test-app.outcome }}'"
 
   close-pullrequest:
-    if: jobs.title-check.steps.titlecheck.status == failure()
+    if: job.title-check.steps.titlecheck.status == failure()
     runs-on: ubuntu-latest
     steps:
     - uses: superbrothers/close-pull-request@v3
