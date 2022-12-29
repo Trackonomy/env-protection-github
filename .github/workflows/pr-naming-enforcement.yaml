@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull Request Title Check
-      - uses: naveenk1223/action-pr-title@master
+        uses: naveenk1223/action-pr-title@master
         id: titlecheck
         with:
           regex: '.+' # Regex the title should match.
