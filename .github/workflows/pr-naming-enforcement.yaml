@@ -22,7 +22,7 @@ jobs:
     #   run: exit 1
 
   close-pullrequest:
-    if: title-check.steps.titlecheck.status == failure()
+    if: jobs.title-check.steps.titlecheck.status == failure()
     runs-on: ubuntu-latest
     steps:
     - uses: superbrothers/close-pull-request@v3
