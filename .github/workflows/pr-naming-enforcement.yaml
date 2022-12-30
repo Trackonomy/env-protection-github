@@ -24,7 +24,7 @@ jobs:
         with:
           pull-request-number: ${{ github.event.number }}
           comment: |
-            ## Pull Request Has Been Closed... Title <${{ github.event.pull_request.title }}> is invalid or Not Authorized 
+            ## Pull Request Has Been Closed... Title is invalid or Not Authorized 
             
             - No Spaces in PR Title
             - Minimum Length of Title is 5
