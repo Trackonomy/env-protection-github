@@ -1,0 +1,9 @@
+on:
+  pull_request:
+    branches:
+    - main
+
+    
+environment:
+      name: 'Production'
+      url: 'https://${{ env.WEBAPP_NAME }}.azurewebsites.net/'
