@@ -75,9 +75,9 @@ jobs:
     - name: 'Az CLI login using OIDC'
       uses: azure/login@v1
       with:
-          client-id: ${{ env.AZURE_CLIENT_ID }}
-          tenant-id: ${{ env.AZURE_TENANT_ID }}
-          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+          client-id: 0636d7e0-ff77-459e-ae19-4bce311b1df9
+          tenant-id: 4e15d61-1552-4509-955d-4052e7a90433
+          subscription-id: a92ebf37-cae1-460d-8a16-ce7d28d0ff9c
     - name: 'Out Put Creds for Upload'
       id: cli-login-creds
       run: |
