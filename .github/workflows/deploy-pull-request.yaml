@@ -70,18 +70,22 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     outputs:
       token_creation_status: ${{ steps.OIDCTOKEN.status }}
-      secret: ${{ steps.cli-login-creds.outputs.secret }}
+      AZURE_CLIENT_ID: ${{ steps.cli-login-creds.outputs.AZURE_CLIENT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ steps.cli-login-creds.outputs.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{ steps.cli-login-creds.outputs.AZURE_TENANT_ID }}
     steps:
     - name: 'Az CLI login using OIDC'
       uses: azure/login@v1
       with:
-          client-id: 0636d7e0-ff77-459e-ae19-4bce311b1df9
-          tenant-id: a92ebf37-cae1-460d-8a16-ce7d28d0ff9c
-          subscription-id: 4eb15d61-1552-4509-955d-4052e7a90433
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
     - name: 'Out Put Creds for Upload'
       id: cli-login-creds
       run: |
-        echo "secret=$AZURE_CLIENT_ID"
+        echo "AZURE_CLIENT_ID=$AZURE_CLIENT_ID" >> $GITHUB_OUTPUT
+        echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID"  >> $GITHUB_OUTPUT
+        echo "AZURE_TENANT_ID=$AZURE_TENANT_ID"  >> $GITHUB_OUTPUT
 
 
     - name: Create Azure OIDC Federated Token for Temporary PR ENV in App Registartion
