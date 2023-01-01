@@ -8,3 +8,7 @@ az ad app federated-credential create --id 0636d7e0-ff77-459e-ae19-4bce311b1df9 
         \"api://AzureADTokenExchange\"
     ]
 }"
+
+
+
+az ad sp create-for-rbac --name "CICD" --role contributor --scopes /subscriptions/4e15d61-1552-4509-955d-4052e7a90433  --sdk-auth

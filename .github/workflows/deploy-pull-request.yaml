@@ -62,15 +62,27 @@ jobs:
     name: Create test env
     needs: [title-check]
     runs-on: ubuntu-latest
+    environment:
+      name: 'Production'
+    env:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     outputs:
       token_creation_status: ${{ steps.OIDCTOKEN.status }}
+      secret: ${{ steps.cli-login-creds.outputs.secret }}
     steps:
     - name: 'Az CLI login using OIDC'
       uses: azure/login@v1
       with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+    - name: 'Out Put Creds for Upload'
+      id: cli-login-creds
+      run: |
+        echo "secret=$AZURE_CLIENT_ID"
+
 
     - name: Create Azure OIDC Federated Token for Temporary PR ENV in App Registartion
       id: OIDCTOKEN
