@@ -27,7 +27,7 @@ jobs:
         uses: naveenk1223/action-pr-title@master
         id: titlecheck
         with:
-          regex: '^[a-zA-Z0-9\*\!\\?\(\)]{5,20}$' # Regex the title should match.
+          regex: '^[a-zA-Z0-9\*\-\!\\?\(\)]{5,20}$' # Regex the title should match.
           allowed_prefixes: 'feature,fix,bugfix,patch,enhancement,hotfix' # title should start with the given prefix
           prefix_case_sensitive: false # title prefix are case insensitive
           min_length: 5 # Min length of the title
@@ -70,7 +70,9 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     outputs:
       token_creation_status: ${{ steps.OIDCTOKEN.status }}
-      secret: ${{ steps.cli-login-creds.outputs.secret }}
+      AZURE_CLIENT_ID: ${{ steps.cli-login-creds.outputs.AZURE_CLIENT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ steps.cli-login-creds.outputs.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{ steps.cli-login-creds.outputs.AZURE_TENANT_ID }}
     steps:
     - name: 'Az CLI login using OIDC'
       uses: azure/login@v1
@@ -81,7 +83,9 @@ jobs:
     - name: 'Out Put Creds for Upload'
       id: cli-login-creds
       run: |
-        echo "secret=$AZURE_CLIENT_ID"
+        echo "AZURE_CLIENT_ID=$AZURE_CLIENT_ID" >> $GITHUB_OUTPUT
+        echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID"  >> $GITHUB_OUTPUT
+        echo "AZURE_TENANT_ID=$AZURE_TENANT_ID"  >> $GITHUB_OUTPUT
 
 
     - name: Create Azure OIDC Federated Token for Temporary PR ENV in App Registartion
