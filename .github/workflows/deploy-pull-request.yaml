@@ -76,7 +76,7 @@ jobs:
       uses: azure/login@v1
       with:
           client-id: 0636d7e0-ff77-459e-ae19-4bce311b1df9
-          tenant-id: 4e15d61-1552-4509-955d-4052e7a90433
+          tenant-id: a92ebf37-cae1-460d-8a16-ce7d28d0ff9c
           subscription-id: 4eb15d61-1552-4509-955d-4052e7a90433
     - name: 'Out Put Creds for Upload'
       id: cli-login-creds
