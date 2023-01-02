@@ -70,7 +70,7 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     outputs:
       token_creation_status: ${{ steps.OIDCTOKEN.status }}
-      AZURE_CLIENT_ID: test
+      AZURE_CLIENT_ID: ${{ steps.cli-login-creds.outputs.AZURE_CLIENT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ steps.cli-login-creds.outputs.AZURE_SUBSCRIPTION_ID }}
       AZURE_TENANT_ID: ${{ steps.cli-login-creds.outputs.AZURE_TENANT_ID }}
     steps:
@@ -84,7 +84,7 @@ jobs:
       id: cli-login-creds
       shell: bash
       run: |
-        echo "AZURE_CLIENT_ID=$AZURE_CLIENT_ID" >> $GITHUB_OUTPUT
+        # echo "AZURE_CLIENT_ID=$AZURE_CLIENT_ID" >> $GITHUB_OUTPUT
         echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID"  >> $GITHUB_OUTPUT
         echo "AZURE_TENANT_ID=$AZURE_TENANT_ID"  >> $GITHUB_OUTPUT
         CLIENT_ID=$AZURE_CLIENT_ID
