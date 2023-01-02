@@ -125,12 +125,12 @@ jobs:
 
     steps:
     - name: Get Deploy Creds
-        id: get_deploy_key
-        shell: bash
-        run: |
-          client_id=$(gpg --decrypt --quiet --batch --passphrase "test" --output - <(echo "${{ needs.set-up-test-env.outputs.AZURE_CLIENT_ID }}" | base64 --decode))
-          echo "::add-mask::$client_id"
-          echo "AZURE_CLIENT_ID=$client_id"  >> $GITHUB_OUTPUT
+      id: get_deploy_key
+      shell: bash
+      run: |
+        client_id=$(gpg --decrypt --quiet --batch --passphrase "test" --output - <(echo "${{ needs.set-up-test-env.outputs.AZURE_CLIENT_ID }}" | base64 --decode))
+        echo "::add-mask::$client_id"
+        echo "AZURE_CLIENT_ID=$client_id"  >> $GITHUB_OUTPUT
 
     - name: Download artifact from build job
       uses: actions/download-artifact@v2
