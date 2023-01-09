@@ -10,7 +10,8 @@ on:
 concurrency: 
   group: ci-${{ github.event.number }}
   cancel-in-progress: true
-
+permissions:
+    id-token: write
 env:
   WEBAPP_NAME: apitestcole2
   RESOURCE_GROUP: appsvc_linux_centralus_basic
