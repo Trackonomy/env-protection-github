@@ -74,7 +74,7 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ steps.cli-login-creds.outputs.AZURE_SUBSCRIPTION_ID }}
       AZURE_TENANT_ID: ${{ steps.cli-login-creds.outputs.AZURE_TENANT_ID }}
     steps:
-    - name: 'Az CLI login using OIDC'
+    - name: 'Az CLI login using OIDC and Output Creds'
       uses: azure/login@v1
       with:
           client-id: ${{ env.AZURE_CLIENT_ID }}
@@ -85,13 +85,31 @@ jobs:
       shell: bash
       run: |
         # echo "AZURE_CLIENT_ID=$AZURE_CLIENT_ID" >> $GITHUB_OUTPUT
-        echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID"  >> $GITHUB_OUTPUT
-        echo "AZURE_TENANT_ID=$AZURE_TENANT_ID"  >> $GITHUB_OUTPUT
+        # echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID"  >> $GITHUB_OUTPUT
+        # echo "AZURE_TENANT_ID=$AZURE_TENANT_ID"  >> $GITHUB_OUTPUT
+
+        # MASK, ENCRYPT AND EXPORT AZURE CLIENT ID
         CLIENT_ID=$AZURE_CLIENT_ID
         echo "::add-mask::$CLIENT_ID"
         CLIENT_ID_encrypted=$(gpg --symmetric --batch --passphrase "test" --output - <(echo "$CLIENT_ID") | base64 -w0)
-        echo "::set-output name=deployment_key_for_api_encrypted::$deployment_key_for_api_encrypted"
+        # echo "::set-output name=deployment_key_for_api_encrypted::$deployment_key_for_api_encrypted"
         echo "AZURE_CLIENT_ID=$CLIENT_ID_encrypted"  >> $GITHUB_OUTPUT
+
+        # MASK, ENCRYPT AND EXPORT AZURE SUBSCRIPTION ID
+        SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
+        echo "::add-mask::$SUBSCRIPTION_ID"
+        SUBSCRIPTION_ID_encrypted=$(gpg --symmetric --batch --passphrase "test" --output - <(echo "$SUBSCRIPTION_ID") | base64 -w0)
+        # echo "::set-output name=deployment_key_for_api_encrypted::$deployment_key_for_api_encrypted"
+        echo "AZURE_SUBSCRIPTION_ID=$SUBSCRIPTION_ID_encrypted"  >> $GITHUB_OUTPUT
+
+        # MASK, ENCRYPT AND EXPORT AZURE TENANT ID
+        TENANT_ID=$AZURE_TENANT_ID
+        echo "::add-mask::$TENANT_ID"
+        TENANT_ID_encrypted=$(gpg --symmetric --batch --passphrase "test" --output - <(echo "$TENANT_ID") | base64 -w0)
+        # echo "::set-output name=deployment_key_for_api_encrypted::$deployment_key_for_api_encrypted"
+        echo "AZURE_TENANT_ID=$TENANT_ID_encrypted"  >> $GITHUB_OUTPUT
+
+
 
     - name: Create Azure OIDC Federated Token for Temporary PR ENV in App Registartion
       id: OIDCTOKEN
@@ -132,6 +150,14 @@ jobs:
         echo "::add-mask::$client_id"
         echo "AZURE_CLIENT_ID=$client_id"  >> $GITHUB_OUTPUT
 
+        subscription_id=$(gpg --decrypt --quiet --batch --passphrase "test" --output - <(echo "${{ needs.set-up-test-env.outputs.AZURE_SUBSCRIPTION_ID }}" | base64 --decode))
+        echo "::add-mask::$subscription_id"
+        echo "AZURE_SUBSCRIPTION_ID=$subscription_id"  >> $GITHUB_OUTPUT
+
+        tenant_id=$(gpg --decrypt --quiet --batch --passphrase "test" --output - <(echo "${{ needs.set-up-test-env.outputs.AZURE_TENANT_ID }}" | base64 --decode))
+        echo "::add-mask::$tenant_id"
+        echo "AZURE_TENANT_ID=$tenant_id"  >> $GITHUB_OUTPUT
+
     - name: Download artifact from build job
       uses: actions/download-artifact@v2
       with:
@@ -141,8 +167,8 @@ jobs:
       uses: azure/login@v1
       with:
           client-id: ${{ steps.get_deploy_key.outputs.AZURE_CLIENT_ID }}
-          tenant-id: ${{ needs.set-up-test-env.outputs.AZURE_TENANT_ID}}
-          subscription-id: ${{ needs.set-up-test-env.outputs.AZURE_SUBSCRIPTION_ID }}
+          tenant-id: ${{ steps.get_deploy_key.outputs.AZURE_TENANT_ID}}
+          subscription-id: ${{ steps.get_deploy_key.outputs.AZURE_SUBSCRIPTION_ID }}
     
     - name: Deploy to slot on staging site
       uses: azure/webapps-deploy@v1
