@@ -4,7 +4,7 @@ const app = express()
 const env = process.env.ENVIRONMENT
 const PORT = parseInt(process.env.PORT || 8080)
 app.get("/ping", (req, res) => {
-    res.send(`Feature Branch: ENV Variable`, process.env.TEST || "Undefined")
+    res.send(`Feature Branch: ENV Variable =  ${process.env.TEST || "Undefined"}`)
 })
 
 
