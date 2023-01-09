@@ -49,4 +49,5 @@ jobs:
           # ⚠️ The provided token needs permission for admin write:org
           token: ${{ secrets.GITHUB_TOKEN }}
           environment: "PR-${{ github.event.pull_request.title }}"
+          onlyRemoveDeployments: true
         
