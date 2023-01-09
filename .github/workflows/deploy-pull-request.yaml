@@ -63,7 +63,7 @@ jobs:
     needs: [title-check]
     runs-on: ubuntu-latest
     environment:
-      name: 'Production'
+      name: 'Azure-Credential-ENV'
     env:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -126,7 +126,7 @@ jobs:
     # - name: Check on failures
     #   if: set-up-test-env.steps.OIDCTOKEN.status == failure() || job.steps.world.status == failure()
     #   run: exit 1
-    - name: Create slot on staging site
+    - name: Create slot on Azure App Service 
       run: az webapp deployment slot create --resource-group $RESOURCE_GROUP  --name $WEBAPP_NAME --slot $SLOT_NAME
 
     
