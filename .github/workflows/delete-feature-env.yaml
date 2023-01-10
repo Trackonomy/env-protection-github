@@ -17,6 +17,7 @@ env:
   RESOURCE_GROUP: appsvc_linux_centralus_basic
   SLOT_NAME: pr-${{ github.event.pull_request.title }}
 
+
 jobs:
   delete-slot:
     runs-on: ubuntu-latest
@@ -37,6 +38,13 @@ jobs:
     
     - name: Delete slot on staging site
       run: az webapp deployment slot delete --resource-group $RESOURCE_GROUP  --name $WEBAPP_NAME --slot $SLOT_NAME
+    
+    - name: DELETE Azure OIDC Federated Token for Temporary PR ENV in App Registration
+      id: OIDCTOKEN
+      run: | 
+        az ad app federated-credential delete \
+        --id 0636d7e0-ff77-459e-ae19-4bce311b1df9
+        --federated-credential-id  PR-${{ github.event.pull_request.title }}
 
   delete-deployment:
     runs-on: ubuntu-latest
