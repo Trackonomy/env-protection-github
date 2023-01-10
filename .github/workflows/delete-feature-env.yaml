@@ -28,6 +28,6 @@ jobs:
         with:
           # ⚠️ The provided token needs permission for admin write:org
           token: ${{ secrets.GITHUB_TOKEN }}
-          environment: PR-feature-v2slottest
+          environment: PR-feature-deletetest 
           onlyRemoveDeployments: true
         
