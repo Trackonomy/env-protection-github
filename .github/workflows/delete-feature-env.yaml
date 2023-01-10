@@ -43,7 +43,7 @@ jobs:
       id: OIDCTOKEN
       run: | 
         az ad app federated-credential delete \
-        --id 0636d7e0-ff77-459e-ae19-4bce311b1df9
+        --id 0636d7e0-ff77-459e-ae19-4bce311b1df9 \
         --federated-credential-id  PR-${{ github.event.pull_request.title }}
 
   delete-deployment:
