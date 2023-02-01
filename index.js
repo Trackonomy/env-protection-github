@@ -4,7 +4,7 @@ const app = express()
 const env = process.env.ENVIRONMENT
 const PORT = parseInt(process.env.PORT || 8080)
 app.get("/ping", (req, res) => {
-    res.send(`Testing_slot_change_branch_v5: ENV Variable =  ${process.env.TEST || "Undefined"}`)
+    res.send(`Testing_jira_ticket: ENV Variable =  ${process.env.TEST || "Undefined"}`)
 })
 
 
